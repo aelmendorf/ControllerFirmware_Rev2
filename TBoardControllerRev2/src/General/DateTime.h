@@ -1,10 +1,3 @@
-/* 
-* DateTime.h
-*
-* Created: 9/25/2018 9:22:37 AM
-* Author: 600076
-*/
-
 
 #ifndef __DATETIME_H__
 #define __DATETIME_H__

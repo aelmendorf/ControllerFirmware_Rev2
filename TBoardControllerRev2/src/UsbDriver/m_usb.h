@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 // USB Serial Driver
-// version: 1
-// Date: 02/05/2019
+// version: 5
+// Date: 11/24/2020
 // authors: Andrew Elmendorf
 // -----------------------------------------------------------------------------
 
@@ -140,9 +140,6 @@ int8_t usb_serial_set_control(uint8_t signals); // set DSR, DCD, RI, etc
 #define USB_SERIAL_PARITY_ERR		0x20
 #define USB_SERIAL_OVERRUN_ERR		0x40
 
-// This file does not include the HID debug functions, so these empty
-// macros replace them with nothing, so users can compile code that
-// has calls to these functions.
 #define usb_debug_putchar(c)
 #define usb_debug_flush_output()
 

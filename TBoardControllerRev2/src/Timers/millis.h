@@ -2,7 +2,8 @@
  * millis.h
  *
  * Created: 3/8/2019 01:35:09 PM
- *  Author: 600076
+ *  Implemented: Andrew Elmendorf
+ * Created by Arduino
  */ 
 
 
@@ -30,7 +31,6 @@ typedef unsigned long millis_t;
 /**
 * Alias of millis_get().
 *
-* @note Not availble for Arduino since millis() is already used.
 */
 #define millis() millis_get()
 #endif
@@ -38,58 +38,13 @@ typedef unsigned long millis_t;
 #ifdef __cplusplus
 extern "C" {
 	#endif
-
-	/**
-	* Initialise, must be called before anything else!
-	*
-	* @return (none)
-	*/
 	void millis_init(void);
-
-	/**
-	* Get milliseconds.
-	*
-	* @return Milliseconds.
-	*/
 	millis_t millis_get(void);
-
-	/**
-	* Turn auto_on timer and resume time keeping.
-	*
-	* @return (none)
-	*/
 	void millis_resume(void);
-
-	/**
-	* Pause time keeping and turn off timer to save power.
-	*
-	* @return (none)
-	*/
 	void millis_pause(void);
-
-	/**
-	* Reset milliseconds count to 0.
-	*
-	* @return (none)
-	*/
 	void millis_reset(void);
-
-	/**
-	* Add time.
-	*
-	* @param [ms] Milliseconds to add.
-	* @return (none)
-	*/
 	void millis_add(millis_t ms);
-
-	/**
-	* Subtract time.
-	*
-	* @param [ms] Milliseconds to subtract.
-	* @return (none)
-	*/
 	void millis_subtract(millis_t ms);
-
 	#ifdef __cplusplus
 }
 #endif

@@ -1,9 +1,9 @@
-/*
- * m_usb.c
- *
- * Created: 2/5/2019 10:31:02 AM
- *  Author: 600076
- */ 
+// -----------------------------------------------------------------------------
+// USB Serial Driver
+// version: 5
+// Date: 11/24/2020
+// authors: Andrew Elmendorf
+// -----------------------------------------------------------------------------
 
 #define USB_SERIAL_PRIVATE_INCLUDE
 #include "m_usb.h"
@@ -71,9 +71,7 @@ int8_t usb_serial_set_control(uint8_t signals); // set DSR, DCD, RI, etc
 #define USB_SERIAL_PARITY_ERR		0x20
 #define USB_SERIAL_OVERRUN_ERR		0x40
 
-// This file does not include the HID debug functions, so these empty
-// macros replace them with nothing, so users can compile code that
-// has calls to these functions.
+
 #define usb_debug_putchar(c)
 #define usb_debug_flush_output()
 
@@ -269,9 +267,7 @@ static const uint8_t PROGMEM config1_descriptor[CONFIG1_DESC_SIZE] = {
 	0					// bInterval
 };
 
-// If you're desperate for a little extra code memory, these strings
-// can be completely removed if iManufacturer, iProduct, iSerialNumber
-// in the device descriptor are changed to zeros.
+
 struct usb_string_descriptor_struct {
 	uint8_t bLength;
 	uint8_t bDescriptorType;
@@ -640,7 +636,7 @@ int8_t usb_serial_write(const uint8_t *buffer, uint16_t size)
 
 
 // immediately transmit any buffered output.
-// This doesn't actually transmit the data - that is impossible!
+// This doesn't actually transmit the data
 // USB devices only transmit when the host allows, so the best
 // we can do is release the FIFO buffer for when the host wants it
 void m_usb_tx_push(void)
@@ -728,7 +724,7 @@ int8_t usb_serial_set_control(uint8_t signals)
 
 /**************************************************************************
  *
- *  Private Functions - not intended for general user consumption....
+ *  Private Functions
  *
  **************************************************************************/
 
