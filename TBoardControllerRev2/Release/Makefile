@@ -33,26 +33,26 @@ LINKER_SCRIPT_DEP:=
 
 # Every subdirectory with source files must be described here
 SUBDIRS :=  \
-../General \
-../CurrentDriver \
-../EEPROM \
-../Timers \
-../Program \
-../UsbDriver \
-../Tasks
+../src \
+../src/CurrentDriver/ \
+../src/EEPROM/ \
+../src/General/ \
+../src/Program/ \
+../src/Tasks/ \
+../src/Timers/ \
+../src/UsbDriver/
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../CurrentDriver/CurrentDriver.cpp \
-../EEPROM/EEPROM.cpp \
-../General/DateTime.cpp \
-../main.cpp \
-../Program/BoardController.cpp \
-../Tasks/Task.cpp \
-../Timers/millis.cpp \
-../UsbDriver/m_usb.c \
-../UsbDriver/USBSerial.cpp
+../src/CurrentDriver/CurrentDriver.cpp \
+../src/EEPROM/EEPROM.cpp \
+../src/General/DateTime.cpp \
+../src/main.cpp \
+../src/Program/BoardController.cpp \
+../src/Tasks/Task.cpp \
+../src/Timers/millis.cpp \
+../src/UsbDriver/m_usb.c
 
 
 PREPROCESSING_SRCS += 
@@ -62,48 +62,44 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-CurrentDriver/CurrentDriver.o \
-EEPROM/EEPROM.o \
-General/DateTime.o \
-main.o \
-Program/BoardController.o \
-Tasks/Task.o \
-Timers/millis.o \
-UsbDriver/m_usb.o \
-UsbDriver/USBSerial.o
+src/CurrentDriver/CurrentDriver.o \
+src/EEPROM/EEPROM.o \
+src/General/DateTime.o \
+src/main.o \
+src/Program/BoardController.o \
+src/Tasks/Task.o \
+src/Timers/millis.o \
+src/UsbDriver/m_usb.o
 
 OBJS_AS_ARGS +=  \
-CurrentDriver/CurrentDriver.o \
-EEPROM/EEPROM.o \
-General/DateTime.o \
-main.o \
-Program/BoardController.o \
-Tasks/Task.o \
-Timers/millis.o \
-UsbDriver/m_usb.o \
-UsbDriver/USBSerial.o
+src/CurrentDriver/CurrentDriver.o \
+src/EEPROM/EEPROM.o \
+src/General/DateTime.o \
+src/main.o \
+src/Program/BoardController.o \
+src/Tasks/Task.o \
+src/Timers/millis.o \
+src/UsbDriver/m_usb.o
 
 C_DEPS +=  \
-CurrentDriver/CurrentDriver.d \
-EEPROM/EEPROM.d \
-General/DateTime.d \
-main.d \
-Program/BoardController.d \
-Tasks/Task.d \
-Timers/millis.d \
-UsbDriver/m_usb.d \
-UsbDriver/USBSerial.d
+src/CurrentDriver/CurrentDriver.d \
+src/EEPROM/EEPROM.d \
+src/General/DateTime.d \
+src/main.d \
+src/Program/BoardController.d \
+src/Tasks/Task.d \
+src/Timers/millis.d \
+src/UsbDriver/m_usb.d
 
 C_DEPS_AS_ARGS +=  \
-CurrentDriver/CurrentDriver.d \
-EEPROM/EEPROM.d \
-General/DateTime.d \
-main.d \
-Program/BoardController.d \
-Tasks/Task.d \
-Timers/millis.d \
-UsbDriver/m_usb.d \
-UsbDriver/USBSerial.d
+src/CurrentDriver/CurrentDriver.d \
+src/EEPROM/EEPROM.d \
+src/General/DateTime.d \
+src/main.d \
+src/Program/BoardController.d \
+src/Tasks/Task.d \
+src/Timers/millis.d \
+src/UsbDriver/m_usb.d
 
 OUTPUT_FILE_PATH +=TBoardControllerRev2.elf
 
@@ -119,66 +115,59 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-CurrentDriver/CurrentDriver.o: ../CurrentDriver/CurrentDriver.cpp
+src/CurrentDriver/CurrentDriver.o: ../src/CurrentDriver/CurrentDriver.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../General" -I"../CurrentDriver" -I"../Program" -I"../PWM" -I"../Tasks" -I"../Timers" -I"../UsbDriver" -I"../EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../src/UsbDriver" -I"../src/CurrentDriver" -I"../src/EEPROM" -I"../src/General" -I"../src/Program" -I"../src/Tasks" -I"../src/Timers"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-EEPROM/EEPROM.o: ../EEPROM/EEPROM.cpp
+src/EEPROM/EEPROM.o: ../src/EEPROM/EEPROM.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../General" -I"../CurrentDriver" -I"../Program" -I"../PWM" -I"../Tasks" -I"../Timers" -I"../UsbDriver" -I"../EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../src/UsbDriver" -I"../src/CurrentDriver" -I"../src/EEPROM" -I"../src/General" -I"../src/Program" -I"../src/Tasks" -I"../src/Timers"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-General/DateTime.o: ../General/DateTime.cpp
+src/General/DateTime.o: ../src/General/DateTime.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../General" -I"../CurrentDriver" -I"../Program" -I"../PWM" -I"../Tasks" -I"../Timers" -I"../UsbDriver" -I"../EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../src/UsbDriver" -I"../src/CurrentDriver" -I"../src/EEPROM" -I"../src/General" -I"../src/Program" -I"../src/Tasks" -I"../src/Timers"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-./main.o: .././main.cpp
+src/main.o: ../src/main.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../General" -I"../CurrentDriver" -I"../Program" -I"../PWM" -I"../Tasks" -I"../Timers" -I"../UsbDriver" -I"../EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../src/UsbDriver" -I"../src/CurrentDriver" -I"../src/EEPROM" -I"../src/General" -I"../src/Program" -I"../src/Tasks" -I"../src/Timers"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-Program/BoardController.o: ../Program/BoardController.cpp
+src/Program/BoardController.o: ../src/Program/BoardController.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../General" -I"../CurrentDriver" -I"../Program" -I"../PWM" -I"../Tasks" -I"../Timers" -I"../UsbDriver" -I"../EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../src/UsbDriver" -I"../src/CurrentDriver" -I"../src/EEPROM" -I"../src/General" -I"../src/Program" -I"../src/Tasks" -I"../src/Timers"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-Tasks/Task.o: ../Tasks/Task.cpp
+src/Tasks/Task.o: ../src/Tasks/Task.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../General" -I"../CurrentDriver" -I"../Program" -I"../PWM" -I"../Tasks" -I"../Timers" -I"../UsbDriver" -I"../EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../src/UsbDriver" -I"../src/CurrentDriver" -I"../src/EEPROM" -I"../src/General" -I"../src/Program" -I"../src/Tasks" -I"../src/Timers"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-Timers/millis.o: ../Timers/millis.cpp
+src/Timers/millis.o: ../src/Timers/millis.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../General" -I"../CurrentDriver" -I"../Program" -I"../PWM" -I"../Tasks" -I"../Timers" -I"../UsbDriver" -I"../EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../src/UsbDriver" -I"../src/CurrentDriver" -I"../src/EEPROM" -I"../src/General" -I"../src/Program" -I"../src/Tasks" -I"../src/Timers"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-UsbDriver/m_usb.o: ../UsbDriver/m_usb.c
+src/UsbDriver/m_usb.o: ../src/UsbDriver/m_usb.c
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../General" -I"../CurrentDriver" -I"../Program" -I"../PWM" -I"../Tasks" -I"../Timers" -I"../UsbDriver" -I"../EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-UsbDriver/USBSerial.o: ../UsbDriver/USBSerial.cpp
-	@echo Building file: $<
-	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../General" -I"../CurrentDriver" -I"../Program" -I"../PWM" -I"../Tasks" -I"../Timers" -I"../UsbDriver" -I"../EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\include" -I"../src/CurrentDriver" -I"../src/EEPROM" -I"../src/General" -I"../src/Program" -I"../src/Tasks" -I"../src/Timers" -I"../src/UsbDriver"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega32u4 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\Atmel\ATmega_DFP\1.6.364\gcc\dev\atmega32u4" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 

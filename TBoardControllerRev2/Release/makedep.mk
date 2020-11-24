@@ -2,21 +2,19 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-CurrentDriver\CurrentDriver.cpp
+src\CurrentDriver\CurrentDriver.cpp
 
-EEPROM\EEPROM.cpp
+src\EEPROM\EEPROM.cpp
 
-General\DateTime.cpp
+src\General\DateTime.cpp
 
-main.cpp
+src\main.cpp
 
-Program\BoardController.cpp
+src\Program\BoardController.cpp
 
-Tasks\Task.cpp
+src\Tasks\Task.cpp
 
-Timers\millis.cpp
+src\Timers\millis.cpp
 
-UsbDriver\m_usb.c
-
-UsbDriver\USBSerial.cpp
+src\UsbDriver\m_usb.c
 
