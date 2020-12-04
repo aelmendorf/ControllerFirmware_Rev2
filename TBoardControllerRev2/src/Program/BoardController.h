@@ -95,10 +95,10 @@ protected:
 //Timer Variables DO NOT TOUCH
 
 private:
-CurrentDriver currentDriver;
-Task task;
-TIMER_REG time_reg;
-bool switch_latch;
+	CurrentDriver currentDriver;
+	Task task;
+	TIMER_REG time_reg;
+	bool switch_latch;
 
 //functions
 public:

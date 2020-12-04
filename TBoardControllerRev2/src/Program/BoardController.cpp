@@ -3,7 +3,7 @@
 *
 * Created: 3/12/2019 12:41:52 PM
 * Author: Andrew Elmendorf
-* To Be Completly Redone
+* To Be Completely Redone
 */
 
 
@@ -12,6 +12,7 @@
 // default constructor
 BoardController::BoardController()
 {
+	
 	//all fields explicitly initialized in setup/start 
 } //BoardController
 
@@ -25,16 +26,20 @@ void BoardController::Setup(){
 	CLKPR=0;
 		
 	//Signal LEDS
-	DDRB|=(1<<RED) | (1<<GREEN) | (1<<BLUE);
-	PORTB|=(1<<RED) | (1<<GREEN) | (1<<BLUE);
+	DDRB|=(1<<LEDR1) | (1<<LEDG1) | (1<<LEDB1);
+	PORTB|=(1<<LEDR1) | (1<<LEDG1) | (1<<LEDB1);
 		
 	//Lid Switch setup
-	PORTF|=(1<<LID_SWITCH);
-	DDRF&=~(1<<LID_SWITCH);
+	PORTF|=(1<<LIDSW);
+	DDRF&=~(1<<LIDSW);
+	
+	//Current Driver Ports
+	DDRC|=(1<<LED_CTRL1);
+	DDRD|=(1<<LED_CTRL2) | (1<<LED_CTRL3);
 		
 	//current driver setup
 	this->currentDriver.init();
-	this->currentDriver.currentValue=SET_CURRENT;
+	//this->currentDriver.led1Current=SET_CURRENT;
 }
 
 void BoardController::Start(){
@@ -85,7 +90,7 @@ void BoardController::Run(){
 }
 
 bool BoardController::Check_Lid(){
-	return (PINF & (1<<LID_SWITCH));
+	return (PINF & (1<<LIDSW));
 }
 
 void BoardController::Wait_Cycle(){
@@ -108,13 +113,13 @@ void BoardController::Wait_Cycle(){
 void BoardController::Wait_Auto(){
 	if(this->Check_Lid()){
 		if(!this->task.error){
-			this->currentDriver.turn_off();
+			this->currentDriver.turn_off(0);
 			this->RunRed();
 		}
 		this->task.error=true;
 	}else{
 		if(this->task.error){
-			this->currentDriver.turn_on();
+			this->currentDriver.turn_on(0);
 			this->RunUVOn();
 		}
 		this->task.error=false;
@@ -145,13 +150,13 @@ void BoardController::Always_On(void){
 	if(this->Check_Lid()){
 		if(!this->task.error){
 			this->RunRed();
-			this->currentDriver.turn_off();
+			this->currentDriver.turn_off(1);
 		}
 		this->task.error=true;
 	}else{
 		if(this->task.error){
 			this->RunUVOn();
-			this->currentDriver.turn_on();
+			this->currentDriver.turn_on(1);
 		}
 		this->task.error=false;
 	}
@@ -161,7 +166,7 @@ void BoardController::Transition_Auto(Direction direction){
 	switch(direction){
 		case TO:{
 			if(!this->task.error){
-				this->currentDriver.turn_on();
+				this->currentDriver.turn_on(1);
 				this->RunUVOn();
 			}
 			this->task.state=WAIT_AUTO;
@@ -169,7 +174,7 @@ void BoardController::Transition_Auto(Direction direction){
 			break;
 		}
 		case FROM:{
-			this->currentDriver.turn_off();
+			this->currentDriver.turn_off(1);
 			if(!this->task.error){
 				this->RunUVOff();
 			}
@@ -215,7 +220,7 @@ void BoardController::Transition_AlwaysOn(Direction direction){
 	switch(direction){
 		case TO:{
 			this->task.state=ALWAYS_ON;
-			this->currentDriver.turn_on();
+			this->currentDriver.turn_on(1);
 			this->RunUVOn();
 			break;
 		}
@@ -226,22 +231,22 @@ void BoardController::Transition_AlwaysOn(Direction direction){
 }
 
 void BoardController::RunUVOff(){
-	PORTB|=(1<<RED) | (1<<GREEN) | (1<<BLUE);
-	PORTB&=~(1<<GREEN);
+	PORTB|=(1<<LEDR1) | (1<<LEDG1) | (1<<LEDB1);
+	PORTB&=~(1<<LEDG1);
 }
 
 void BoardController::RunUVOn(){
-	PORTB|=(1<<RED) | (1<<GREEN) | (1<<BLUE);
-	PORTB&=~(1<<BLUE);
+	PORTB|=(1<<LEDR1) | (1<<LEDG1) | (1<<LEDB1);
+	PORTB&=~(1<<LEDB1);
 }
 
 void BoardController::RunRed(){
-	PORTB|=(1<<RED) | (1<<GREEN) | (1<<BLUE);
-	PORTB&=~(1<<RED);
+	PORTB|=(1<<LEDR1) | (1<<LEDG1) | (1<<LEDB1);
+	PORTB&=~(1<<LEDR1);
 }
 
 void BoardController::RunAllOff(){
-	PORTB|=(1<<RED) | (1<<GREEN) | (1<<BLUE);
+	PORTB|=(1<<LEDR1) | (1<<LEDG1) | (1<<LEDB1);
 }
 
 

@@ -1,8 +1,8 @@
 /* 
 * CurrentDriver.h
 *
-* Created: 9/19/2018 10:58:12 AM
-* Author: Andrew Elmendorf
+* Created: 12/1/2020 9:58:10 AM
+* Author: AElmendo
 */
 
 
@@ -15,28 +15,29 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-
 class CurrentDriver
 {
-//variables
-public:
-	float currentValue;
-protected:
-private:
+	//variables
+	public:
+	float ledCurrents[3];
+	protected:
+	private:
 
-//functions
-public:
+	//functions
+	public:
 	CurrentDriver();
-	CurrentDriver(float value);
+	CurrentDriver(float led1Current,float led2Current,float led3Current);
 	~CurrentDriver();
-	void turn_off(void);
-	void turn_on(void);
+	void turn_off(uint8_t led);
+	void turn_on(uint8_t led);
+	void turn_offAll();
 	void init(void);
-	void set_current(uint8_t reset);
+	void set_current(uint8_t led,uint8_t reset);
+	void set_current(uint8_t led,float current,uint8_t reset);
 	uint8_t get_display(void);
 	int8_t set_current_value(uint8_t value);
-protected:
-private:
+	protected:
+	private:
 
 }; //CurrentDriver
 

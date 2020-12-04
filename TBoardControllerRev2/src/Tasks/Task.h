@@ -9,14 +9,36 @@
 #ifndef __TASK_H__
 #define __TASK_H__
 #include <avr/io.h>
-typedef enum state{INIT,WAIT_HR,WAIT_DAY,WAIT_AUTO,ALWAYS_ON}STATE;
+
+//typedef enum {
+	//INIT,WAIT_HR,WAIT_DAY,WAIT_AUTO,ALWAYS_ON
+//}State;
+
+typedef enum{
+	RUNNING,
+	WAIT,
+	ERROR,//
+	IDLE,
+	NOSTATE
+}State;
+
+typedef enum {
+	AUTO,
+	USB,
+	MANUAL_L1,
+	MANUAL_L2,
+	MANUAL_L3,
+	NOMODE
+}Mode;
 
 class Task
 {
 //variables
 public:
 	bool  error;
-	STATE state;
+	State state;
+	Mode mode;
+	bool latched;
 protected:
 private:
 
@@ -24,6 +46,7 @@ private:
 public:
 	Task();
 	void Clear();
+	State GetState();
 	Task(const Task &c);
 	Task& operator=(const Task &c);
 	bool operator!=(const Task &c)const;

@@ -21,11 +21,15 @@ src/main.d src/main.o: ../src/main.cpp ../src/General/TBoard.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
- ../src/CurrentDriver/CurrentDriver.h ../src/EEPROM/EEPROM.h \
- ../src/Timers/millis.h ../src/UsbDriver/m_general.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
+ ../src/CurrentDriver/CurrentDriver.h ../src/EEPROM/RecipeAccess.h \
+ ../src/Timers/millis.h ../src/Switch/Switch.h ../src/Timers/Timer.h \
+ ../src/CurrentDriver/LedDriver.h ../src/Program/LedController.h \
+ ../src/UsbDriver/m_general.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
- ../src/UsbDriver/m_usb.h ../src/UsbDriver/m_general.h
+ ../src/UsbDriver/m_usb.h ../src/UsbDriver/m_general.h \
+ ../src/Program/Controller.h ../src/Tasks/Task.h \
+ ../src/EEPROM/RunLogger.h
 
 ../src/General/TBoard.h:
 
@@ -73,18 +77,32 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
 
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
+
 ../src/CurrentDriver/CurrentDriver.h:
 
-../src/EEPROM/EEPROM.h:
+../src/EEPROM/RecipeAccess.h:
 
 ../src/Timers/millis.h:
 
-../src/UsbDriver/m_general.h:
+../src/Switch/Switch.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
+../src/Timers/Timer.h:
+
+../src/CurrentDriver/LedDriver.h:
+
+../src/Program/LedController.h:
+
+../src/UsbDriver/m_general.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h:
 
 ../src/UsbDriver/m_usb.h:
 
 ../src/UsbDriver/m_general.h:
+
+../src/Program/Controller.h:
+
+../src/Tasks/Task.h:
+
+../src/EEPROM/RunLogger.h:

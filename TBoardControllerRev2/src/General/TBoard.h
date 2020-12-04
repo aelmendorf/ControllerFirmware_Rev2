@@ -2,7 +2,7 @@
  * TBoard.h
  *
  * Created: 2/18/2019 10:15:46 AM
- *  Author: 600076
+ *  Author: Andrew Elmendorf
  */ 
 
 #ifndef TBOARD_H_
@@ -16,24 +16,73 @@
 #include <time.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include <CurrentDriver.h>
-#include <EEPROM.h>
+#include <RecipeAccess.h>
 #include <millis.h>
+#include <Switch.h>
+#include <Timer.h>
+#include <LedDriver.h>
+#include <LedController.h>
 #include "m_general.h"
 #include "m_usb.h"
 
+#define USB_ENABLE		1
 
 #define TRUE			(uint8_t)1
 #define FALSE			(uint8_t)0
 
 #define HIGH			(uint8_t)1
 #define LOW				(uint8_t)0
+
 //Ports
-#define RED				PORTB4
-#define BLUE			PORTB6
-#define GREEN			PORTB5
-#define LID_SWITCH		PINF5
-#define CURRENT_DRIVER	PORTC7
+#define LEDR1			PORTB4
+#define LEDB1			PORTB6
+#define LEDG1			PORTB5
+
+#define LEDR2			PORTD6
+#define LEDB2			PORTC6
+#define LEDG2			PORTD7
+
+#define POS1_P1			PORTB2
+#define POS1_P2			PORTB1
+#define POS1_P3			PORTB0
+
+#define POS2_P1			PORTD5
+#define POS2_P2			PORTD3
+#define POS2_P3			PORTD2
+
+
+#define LIDSW			PINF5
+#define LED_CTRL1		PORTC7
+#define LED_CTRL2		PORTD1
+#define LED_CTRL3		PORTD0
+
+#define POS1_B1			0
+#define POS1_B2			1
+#define POS1_B3			2
+#define POS2_B1			3
+#define POS2_B2			4
+#define POS2_B3			5
+
+#define SWITCHCOUNT		6
+#define MAINSTART		0
+#define MAINSTOP		3
+#define SECONDSTART		3
+#define SECONDSTOP		6
+#define LEDCOUNT		3
+#define USBSW			1
+#define SWITCHDELAY		1
+
+#define LED1Index		0
+#define LED2Index		1
+#define LED3Index		2
+
+#define MODECOUNT		5
+
+
+#define INT_DECIMAL_STRING_SIZE(int_type) ((8*sizeof(int_type)-1)*10/33+3)
+
 //#define SET_CURRENT		(float)15.0f
 
 
