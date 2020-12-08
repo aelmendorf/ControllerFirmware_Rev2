@@ -21,6 +21,7 @@ void Setup();
 void ProcessSwitch(int sw);
 int CheckMainSwitches();
 void DisplayLed3On();
+void WriteLogValues();
 Switch switches[6];
 
 
@@ -32,6 +33,7 @@ int main(void){
 	controller.Start();
 	controller.Run();
 	//Setup();
+	//WriteLogValues();
 	//WriteSettings();
 	return 1;
 }
@@ -104,13 +106,37 @@ void WriteSettings(){
 	log.LED3CycleCount=3;
 	//RunLogger logger;
 	//logger.Initialize();
-	eeprom_update_block((const void*)&log,(void*)&eeprom_log,sizeof(Log));
 	eeprom.UpdateInMemoryBoardRecipe(recipe);
 	eeprom.SaveRecipe();
+	eeprom_update_block((const void*)&log,(void*)&eeprom_log,sizeof(Log));
 	RunAllOff();
 	RunRed();
 	_delay_ms(1000);
 	RunUVOff();
+}
+
+void WriteLogValues(){
+	RunUVOn();
+	_delay_ms(200);
+	RunLogger logger;
+	logger.Initialize();
+	logger.IncrementBoardCycle();
+	logger.IncrementBoardCycle();
+	logger.IncrementBoardCycle();
+	logger.IncrementLedXCycle(0);
+	logger.IncrementLedXCycle(1);
+	logger.IncrementLedXCycle(2);
+	logger.IncrementLedXCycle(0);
+	logger.IncrementLedXCycle(1);
+	logger.IncrementLedXCycle(2);
+	logger.IncrementLedXCycle(0);
+	logger.IncrementLedXCycle(1);
+	logger.IncrementLedXCycle(2);
+	RunAllOff();
+	RunRed();
+	_delay_ms(1000);
+	RunUVOff();
+
 }
 
 //void WriteSettings(){
