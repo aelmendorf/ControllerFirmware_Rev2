@@ -28,7 +28,7 @@
 #include "m_usb.h"
 
 #define USB_ENABLE		1
-#define DEBUG			1
+#define DEBUG			0
 
 #define TRUE			(uint8_t)1
 #define FALSE			(uint8_t)0
