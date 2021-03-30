@@ -17,6 +17,10 @@ RunLogger::RunLogger(){
 	//this->log.LED3CycleCount=0;
 } //RunLogger
 
+int RunLogger::GetCycleCount(){
+	return this->log.BoardCycleCount;
+}
+
 void RunLogger::Initialize(){
 	eeprom_read_block((void*)&this->log,(const void*)&eeprom_log,sizeof(Log));
 }

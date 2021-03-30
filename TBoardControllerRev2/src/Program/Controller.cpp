@@ -66,6 +66,7 @@ void Controller::Initialize(){
 	this->recipeAccess.Initialize();
 	this->logger.Initialize();
 	this->recipe=this->recipeAccess.GetInMemoryBoardRecipe();
+	//this->cycleTimer=Timer(MIN_TO_MS(this->recipe.CycleTime));
 	this->cycleTimer=Timer(HOUR_TO_MS(this->recipe.CycleTime));
 	this->ledControllers[LED1Index]=LedController(this->recipe.GetLedRecipe(LED1),&PORTC,LED_CTRL1);
 	this->ledControllers[LED2Index]=LedController(this->recipe.GetLedRecipe(LED2),&PORTD,LED_CTRL2);
@@ -260,12 +261,15 @@ void Controller::RunAuto(){
 		}
 		case IDLE:{
 			if(this->cycleTimer.Done()){
-				this->logger.IncrementBoardCycle();
-				this->cycleTimer.Reset();
-				this->task.state=RUNNING;
-				this->DisplayUVOn();
-				for(int i=0;i<LEDCOUNT;i++){
-					this->ledControllers[i].Start();
+				int cycleCount=this->logger.GetCycleCount();
+				if(!(cycleCount>=this->recipe.CycleCount)){
+					this->logger.IncrementBoardCycle();
+					this->cycleTimer.Reset();
+					this->task.state=RUNNING;
+					this->DisplayUVOn();
+					for(int i=0;i<LEDCOUNT;i++){
+						this->ledControllers[i].Start();
+					}
 				}
 			}
 			break;
@@ -322,25 +326,26 @@ void Controller::RunUSB(){
 						size+=INT_DECIMAL_STRING_SIZE(int);//current
 						size+=(int)3*sizeof(char);//term
 						size=size*3;//led*3
-						size+=INT_DECIMAL_STRING_SIZE(millis_t);//cycle
+						size+=INT_DECIMAL_STRING_SIZE(millis_t);//cycle time
+						size+=INT_DECIMAL_STRING_SIZE(int);//cycle count
 						char outBuffer[size];
 						//int size=timerSize+iSize+cSize;
 						//char outBuffer[size];
-						sprintf(outBuffer,"%ld;%ld,%ld,%d;%ld,%ld,%d;%ld,%ld,%d;\r",
-						recipe.CycleTime,recipe.Led1Delay,recipe.Led1RunTime,recipe.Led1Current,
-						recipe.Led2Delay,recipe.Led2RunTime,recipe.Led2Current,
-						recipe.Led3Delay,recipe.Led3RunTime,recipe.Led3Current);
+						sprintf(outBuffer,"%d,%ld;%ld,%ld,%d;%ld,%ld,%d;%ld,%ld,%d;\r",
+						recipe.CycleCount,recipe.CycleTime,recipe.Led1Delay,recipe.Led1RunTime,
+						recipe.Led1Current,recipe.Led2Delay,recipe.Led2RunTime,
+						recipe.Led2Current,recipe.Led3Delay,recipe.Led3RunTime,recipe.Led3Current);
 						uprint(outBuffer);
 						break;
 					}
 					case 'p':{
 						Recipe input;
-						char * token = strtok(buffer, ";");
+						char* token = strtok(buffer, ";");
 						int tCount=0;
 						while( token != NULL ) {
 							if(strcmp(token,"p")!=0){
 								if(tCount==0){
-									sscanf(token,"%ld",&recipe.CycleTime);
+									sscanf(token,"%d,%ld",&recipe.CycleCount,&recipe.CycleTime);
 								}else if(tCount==1){
 									sscanf(token,"%ld,%ld,%d",&recipe.Led1Delay,&recipe.Led1RunTime,&recipe.Led1Current);
 								}else if(tCount==2){
@@ -354,16 +359,17 @@ void Controller::RunUSB(){
 						}
 						recipeAccess.UpdateInMemoryBoardRecipe(recipe);
 						recipeAccess.SaveRecipe();						
-						int size=2*INT_DECIMAL_STRING_SIZE(millis_t);
-						size+=INT_DECIMAL_STRING_SIZE(int);
-						size+=(int)3*sizeof(char);
-						size=size*3;
-						size+=INT_DECIMAL_STRING_SIZE(millis_t);
+						int size=2*INT_DECIMAL_STRING_SIZE(millis_t);//delay and runtime
+						size+=INT_DECIMAL_STRING_SIZE(int);//current
+						size+=(int)3*sizeof(char);//term
+						size=size*3;//led*3
+						size+=INT_DECIMAL_STRING_SIZE(millis_t);//cycle time
+						size+=INT_DECIMAL_STRING_SIZE(int);//cycle count
 						char outBuffer[size];
-						sprintf(outBuffer,"s;%ld;%ld,%ld,%d;%ld,%ld,%d;%ld,%ld,%d;\r",
-						recipe.CycleTime,recipe.Led1Delay,recipe.Led1RunTime,recipe.Led1Current,
-						recipe.Led2Delay,recipe.Led2RunTime,recipe.Led2Current,
-						recipe.Led3Delay,recipe.Led3RunTime,recipe.Led3Current);	
+						sprintf(outBuffer,"s;%d,%ld;%ld,%ld,%d;%ld,%ld,%d;%ld,%ld,%d;\r",
+						recipe.CycleCount,recipe.CycleTime,recipe.Led1Delay,recipe.Led1RunTime,
+						recipe.Led1Current,recipe.Led2Delay,recipe.Led2RunTime,
+						recipe.Led2Current,recipe.Led3Delay,recipe.Led3RunTime,recipe.Led3Current);	
 						uprint(outBuffer);
 						//uprint("s;\r");
 						break;

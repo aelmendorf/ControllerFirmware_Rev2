@@ -58,6 +58,7 @@ typedef struct LedRecipe{
 }LedRecipe;
 
 typedef struct BoardRecipe{
+	int CycleCount;
 	millis_t CycleTime;
 	
 	millis_t Led1Delay;
@@ -130,6 +131,7 @@ typedef struct BoardRecipe{
 }
 	
 	BoardRecipe(const BoardRecipe &c){
+		this->CycleCount=c.CycleCount;
 		this->CycleTime=c.CycleTime;
 		
 		this->Led1Delay=c.Led1Delay;
@@ -146,6 +148,7 @@ typedef struct BoardRecipe{
 	}
 	
 	BoardRecipe& operator=( const BoardRecipe &c ){
+		this->CycleCount=c.CycleCount;
 		this->CycleTime=c.CycleTime;
 		
 		this->Led1Delay=c.Led1Delay;
@@ -163,7 +166,8 @@ typedef struct BoardRecipe{
 	}
 	
 	bool operator==( const BoardRecipe &c){
-		bool equals=(c.CycleTime==this->CycleTime &&
+		bool equals=(c.CycleCount==this->CycleCount&&
+					c.CycleTime==this->CycleTime &&
 					c.Led1Current==this->Led1Current && 
 					c.Led1Delay==this->Led1Delay &&
 					c.Led1RunTime==this->Led1RunTime &&

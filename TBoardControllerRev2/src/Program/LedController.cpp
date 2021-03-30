@@ -19,6 +19,8 @@ LedController::LedController(const LedRecipe &recipe,volatile uint8_t* port,cons
 	this->ledRecipe=recipe;
 	this->delayTimer=Timer(MIN_TO_MS(recipe.LedDelay));
 	this->runTimer=Timer(MIN_TO_MS(recipe.LedRunTime));
+	//this->delayTimer=Timer(SEC_TO_MS(recipe.LedDelay));
+	//this->runTimer=Timer(SEC_TO_MS(recipe.LedRunTime));
 	this->manualPeriod=Timer(5000);
 	this->ledDriver=LedDriver(port,pin,(float)this->ledRecipe.LedCurrent);
 	this->state=LEDIDLE;

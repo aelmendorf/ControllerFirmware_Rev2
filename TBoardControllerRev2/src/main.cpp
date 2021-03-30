@@ -75,6 +75,7 @@ void WriteSettings(){
 	RunUVOn();
 	_delay_ms(200);
 	Recipe recipe;
+	recipe.CycleCount=2;
 	recipe.CycleTime=MIN_TO_MS(1);
 	LedRecipe led1;
 	led1.Led=LED1;

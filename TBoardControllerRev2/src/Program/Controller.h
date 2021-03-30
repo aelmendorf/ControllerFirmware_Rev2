@@ -29,6 +29,7 @@ private:
 	BoardRecipe recipe;
 	Task task,nextTask;
 	bool switchLatch;
+	
 //functions
 public:
 	Controller();
@@ -72,6 +73,7 @@ private:
 	typedef void (Controller::*ModePtr)(void);
 	typedef void (Controller::*LedPtr)(void);
 	typedef void (Controller::*TransitionPtr)(Direction);
+	
 	ModePtr mFunc[MODECOUNT];
 	TransitionPtr tFunc[MODECOUNT];
 	LedPtr lFunc[LEDCOUNT];

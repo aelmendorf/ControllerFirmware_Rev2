@@ -52,6 +52,7 @@ private:
 //functions
 public:
 	RunLogger();
+	int	GetCycleCount();
 	void Initialize();
 	void ResetLog();
 	Log GetInMemoryLog();
